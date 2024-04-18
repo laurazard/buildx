@@ -4,6 +4,7 @@ import (
 	"os"
 
 	debugcmd "github.com/docker/buildx/commands/debug"
+	"github.com/docker/buildx/commands/hooks"
 	imagetoolscmd "github.com/docker/buildx/commands/imagetools"
 	"github.com/docker/buildx/controller/remote"
 	"github.com/docker/buildx/util/cobrautil/completion"
@@ -96,6 +97,7 @@ func addCommands(cmd *cobra.Command, dockerCli command.Cli) {
 		pruneCmd(dockerCli, opts),
 		duCmd(dockerCli, opts),
 		imagetoolscmd.RootCmd(dockerCli, imagetoolscmd.RootOptions{Builder: &opts.builder}),
+		hooks.HookCommand(dockerCli),
 	)
 	if confutil.IsExperimental() {
 		cmd.AddCommand(debugcmd.RootCmd(dockerCli,
